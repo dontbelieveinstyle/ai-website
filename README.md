@@ -130,6 +130,64 @@ npm run preview      # 预览生产版本
 npm run lint         # 代码检查
 ```
 
+### 前端打包和部署
+
+#### 构建生产版本
+```bash
+# 构建前端项目
+npm run build
+```
+
+构建完成后，会在项目根目录生成 `dist/` 文件夹，包含所有优化后的静态文件：
+- `index.html` - 主页面文件
+- `assets/` - 压缩后的 CSS 和 JavaScript 文件
+- `favicon.svg` - 网站图标
+
+#### 生产环境部署
+
+**方式一：使用静态文件服务器**
+```bash
+# 使用 serve 包（需要全局安装）
+npm install -g serve
+serve -s dist -l 3000
+
+# 或使用 Python 内置服务器
+cd dist
+python -m http.server 8080
+```
+
+**方式二：使用 Nginx**
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+    root /path/to/your/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 静态资源缓存
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
+**方式三：部署到云平台**
+- **Vercel**: 连接 GitHub 仓库，自动部署
+- **Netlify**: 拖拽 `dist` 文件夹或连接 Git
+- **GitHub Pages**: 使用 GitHub Actions 自动构建部署
+
+#### 环境变量配置
+生产环境中，确保正确配置 API 地址：
+```bash
+# .env.production
+VITE_API_URL=https://your-backend-domain.com/api
+```
+
 ### 后端开发
 ```bash
 python manage.py runserver    # 启动开发服务器
@@ -138,14 +196,22 @@ python manage.py makemigrations  # 创建数据库迁移
 python manage.py collectstatic   # 收集静态文件
 ```
 
-## 部署
+## 完整部署指南
 
+### 前端部署
+1. 构建生产版本：`npm run build`
+2. 将 `dist/` 目录部署到静态文件服务器
+3. 配置路由重定向到 `index.html`（SPA 路由支持）
+4. 设置正确的 API 地址环境变量
+
+### 后端部署
 项目已配置好生产环境设置，可以部署到各种云平台。确保在生产环境中：
 
 1. 设置正确的环境变量
 2. 使用生产数据库（如 PostgreSQL）
 3. 配置静态文件服务
 4. 启用 HTTPS
+5. 配置 CORS 允许前端域名访问
 
 ## 许可证
 
