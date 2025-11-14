@@ -18,7 +18,7 @@ class BlogPost(models.Model):
     excerpt = models.TextField(max_length=300)
     content = models.TextField()
     # 支持本地上传图片，保存到 MEDIA_ROOT/blog/
-    image = models.ImageField(upload_to='blog/', blank=True, null=True)
+    image = models.ImageField(upload_to='blog/', blank=True, null=True,default=None)
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     author = models.CharField(max_length=100, default='Airabbi Team')
     published = models.BooleanField(default=True)
