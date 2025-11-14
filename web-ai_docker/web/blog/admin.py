@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BlogPost
+from .models import BlogPost, Tag
 
 
 @admin.register(BlogPost)
@@ -11,3 +11,9 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_editable = ('published',)
     date_hierarchy = 'created_at'
     ordering = ('-created_at',)
+    filter_horizontal = ('tags',)
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
