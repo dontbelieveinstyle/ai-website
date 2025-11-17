@@ -217,9 +217,11 @@ export const translations = {
         team: {
           subtitle: '我们拥有一支经验丰富、技术精湛的专业团队，致力于为客户提供最优质的AI解决方案',
           members: [
-            { name: 'Angus', position: '香港分公司董事长' },
-            { name: '王鲁民', position: '山东分公司董事长' },
-            { name: 'Logan', position: '首席技术官' }
+            { name: 'Angus', position: 'CEO', bio: 'Angus是XRE-AI企业智能化转型愿景的核心塑造者，以“技术落地+产业适配”的战略理念推动 AI 价值转化。他拥有丰富的跨行业项目落地经验，从最初推动数字化创新，到如今专注于AI驱动的业务建设，始终致力于让AI技术真正融入企业流程，帮助客户实现智能效率提升和产业战略升级的双重价值。' },
+            { name: '王鲁民', position: '山东分公司董事长', bio: '王鲁民女士专注于构建区域产业生态，为政府与企业搭建产业规划、资源整合与园区运营的系统化平台。她通过引入政策、资本与外部资源，助力本地产业迈向高端价值链。在她的推动下，XRE-AI 的区域布局更具可持续性与落地力，为AI技术在地方产业中的应用拓展了广阔空间。' },
+            { name: 'Edwin', position: '技术顾问', bio: 'Edwin为XRE-AI提供关键的技术与产品策略洞察，具备深厚的系统架构、技术支持与产品管理经验。他能够在复杂需求中精准拆解技术路径，使产品逻辑、用户体验与可执行性保持一致。凭借跨文化与跨行业的技术背景，Edwin 协助XRE-AI的服务，使其具备更高的稳定性与持续迭代能力，为企业提供可靠的技术保障。' },
+            { name: 'Logan', position: '首席技术官', bio: 'Logan负责XRE-AI的核心技术研发与服务落地，聚焦 AI 系统开发、实时数据处理与交互逻辑构建。他擅长将复杂的需求转化为高适配性的技术方案，为核心服务提供坚实的技术基础。在他的技术统筹下，XRE-AI 形成了覆盖“开发-测试-部署-运维”全周期的技术体系，让 AI 服务在多场景下都能具备精准响应与稳定运行的核心优势。' },
+            { name: '金晓磊', position: '算法博士', bio: '金晓磊融合 AI、设计学与文化创新，以多维视角构建 XRE-AI 服务的核心内容方法论。她将国际化教育与科研经验融入 AI 教育训练、AI 咨询等服务，其成果覆盖 AI 教育课程开发、数字分析模型设计、定制化 AI 系统体验优化等领域，让 XRE-AI 的服务既具备技术深度，又拥有贴合企业实际的落地能力与文化适配性。' }
           ]
         },
         achievements: [
@@ -555,9 +557,11 @@ export const translations = {
         team: {
           subtitle: 'We have an experienced, highly skilled team dedicated to delivering the best AI solutions for our clients.',
           members: [
-            { name: 'Angus', position: 'Chairman, Hong Kong Branch' },
-            { name: 'Wang Lumin', position: 'Chairman, Shandong Branch' },
-            { name: 'Logan', position: 'Chief Technology Officer' }
+            { name: 'Angus', position: 'CEO', bio: "Angus is the core shaper of XRE-AI’s vision for enterprise intelligent transformation, driving AI value realization with a strategy of 'technology implementation + industry fit'. With extensive cross-industry delivery experience—from early digital innovation to today’s AI-driven business building—he is dedicated to embedding AI into enterprise processes to achieve both efficiency gains and strategic upgrades." },
+            { name: 'Wang Lumin', position: 'Chairman, Shandong Branch', bio: 'Ms. Wang Lumin focuses on building regional industrial ecosystems, creating systematic platforms for planning, resource integration and park operations for governments and enterprises. By introducing policy, capital and external resources, she helps local industries move up the value chain, enabling XRE-AI’s regional deployment to be more sustainable and pragmatic, and expanding AI adoption in local industries.' },
+            { name: 'Edwin', position: 'Technical Consultant', bio: 'Edwin provides key technical and product strategy insights to XRE-AI, with deep experience in system architecture, technical support and product management. He excels at decomposing complex requirements into executable technical paths to align product logic, user experience and feasibility. With cross-cultural and cross-industry background, Edwin strengthens XRE-AI’s services with stability and continuous iteration to deliver reliable technical assurance for enterprises.' },
+            { name: 'Logan', position: 'Chief Technology Officer', bio: 'Logan leads XRE-AI’s core technology R&D and service delivery, focusing on AI system development, real-time data processing and interaction design. He turns complex needs into highly adaptable technical solutions and provides a solid technical foundation for core services. Under his technical orchestration, XRE-AI has built a full-cycle “development–testing–deployment–operations” system, enabling precise responses and stable performance across scenarios.' },
+            { name: 'Jin Xiaolei', position: 'Algorithm PhD', bio: 'Jin Xiaolei integrates AI, design and cultural innovation to build XRE-AI’s core content methodology from a multi-dimensional perspective. She brings international education and research experience into AI education training and consulting. Her outcomes span AI curriculum development, digital analysis model design, and tailored AI system experience optimization—making XRE-AI’s services both technically deep and practically aligned with enterprise needs and cultural fit.' }
           ]
         },
         achievements: [

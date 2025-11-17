@@ -124,11 +124,12 @@ const BlogDetail: React.FC = () => {
             <div className="mt-12 pt-8 border-t border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">{tagsLabel}</h3>
               <div className="flex flex-wrap gap-3">
-                {/* 后端暂未提供标签，预留占位 */}
-                <span className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full">
-                  <Tag className="w-4 h-4 inline mr-2" />
-                  Tech
-                </span>
+                {(post.tags && post.tags.length > 0 ? post.tags : ['Tech']).map((tag, idx) => (
+                  <span key={idx} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full">
+                    <Tag className="w-4 h-4 inline mr-2" />
+                    #{tag}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

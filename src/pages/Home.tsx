@@ -15,10 +15,10 @@ const Home: React.FC = () => {
 
   // Helper to resolve image URLs (supports absolute and backend-relative paths)
   const placeholderImage = 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=AI%20technology%20abstract%20digital%20background&image_size=landscape_4_3';
-  const apiBase = import.meta.env.VITE_API_BASE_URL || '/api';
+  const apiBase = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://ai.xrexp.io/api' : '/api');
   const backendBase = apiBase.startsWith('http')
     ? apiBase.replace(/\/api\/?$/, '')
-    : (import.meta.env.PROD ? 'http://18.162.134.82' : 'http://localhost:8000');
+    : (import.meta.env.PROD ? 'https://ai.xrexp.io' : 'http://localhost:8000');
   const getImageUrl = (image?: string) => {
     if (!image) return placeholderImage;
     if (/^https?:\/\//.test(image)) return image;

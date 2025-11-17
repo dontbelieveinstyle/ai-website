@@ -1,5 +1,7 @@
 // API 基础 URL 配置
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+// 优先使用环境变量；如未设置，在生产环境默认使用 https://ai.xrexp.io/api，开发环境使用 /api（通常由代理转发到本地后端）。
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://ai.xrexp.io/api' : '/api');
 
 // Contact API
 export interface ContactFormData {
@@ -43,6 +45,7 @@ export interface BlogPost {
   excerpt: string;
   content?: string;
   image: string;
+  tags?: string[];
   author: string;
   created_at: string;
   updated_at?: string;
@@ -66,6 +69,14 @@ export const blogAPI = {
       throw new Error('Failed to fetch blog post');
     }
     
+    return response.json();
+  },
+  
+  getTags: async (): Promise<{ name: string; count: number }[]> => {
+    const response = await fetch(`${API_BASE_URL}/blog/tags/`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch tags');
+    }
     return response.json();
   },
 };

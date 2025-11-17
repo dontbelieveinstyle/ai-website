@@ -4,6 +4,7 @@ import { Search, Calendar, User, Tag, Clock, ArrowRight, Filter, BookOpen, Trend
 import { blogAPI, BlogPost } from '../services/api';
 import { useI18n } from '../i18n/LanguageProvider';
 import { translations } from '../i18n/translations';
+import logoImg from '../assets/logo.jpg';
 
 // BlogPost interface is now imported from api.ts
 
@@ -41,7 +42,20 @@ const Blog: React.FC = () => {
   }, [language]);
 
   const categories = [dict.categoryAll, ...Array.from(new Set(blogPosts.map(() => dict.badgeTechnical)))];
-  const allTags = Array.from(dict.tagsCloud.tags);
+  const [popularTags, setPopularTags] = useState<{ name: string; count: number }[]>([]);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const tags = await blogAPI.getTags();
+        setPopularTags(tags);
+      } catch (err) {
+        console.warn('Failed to fetch tags, fallback to i18n list');
+        setPopularTags(Array.from(dict.tagsCloud.tags).map((name) => ({ name, count: 0 })));
+      }
+    };
+    fetchTags();
+  }, [language]);
 
   const filteredPosts = useMemo(() => {
     let filtered = blogPosts;
@@ -51,12 +65,16 @@ const Blog: React.FC = () => {
     //   filtered = filtered.filter(post => post.category === selectedCategory);
     // }
 
-    // 搜索筛选
+    // 搜索/标签筛选：标题、摘要或标签命中
     if (searchTerm) {
-      filtered = filtered.filter(post => 
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(post => {
+        const inTitleOrExcerpt = 
+          post.title.toLowerCase().includes(term) ||
+          post.excerpt.toLowerCase().includes(term);
+        const inTags = Array.isArray(post.tags) && post.tags.some(t => t.toLowerCase().includes(term));
+        return inTitleOrExcerpt || inTags;
+      });
     }
 
     // 排序
@@ -81,6 +99,18 @@ const Blog: React.FC = () => {
   }));
 
   const dateLocale = language === 'zh' ? 'zh-CN' : 'en-US';
+
+  // 解析图片地址：支持绝对 URL、本地后端相对路径（如 /media/...），缺省使用本地占位图
+  const apiBase = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://ai.xrexp.io/api' : '/api');
+  const backendBase = apiBase.startsWith('http')
+    ? apiBase.replace(/\/api\/?$/, '')
+    : (import.meta.env.PROD ? 'https://ai.xrexp.io' : 'http://localhost:8000');
+  const getImageUrl = (src?: string) => {
+    if (!src) return logoImg;
+    if (src.startsWith('http')) return src;
+    if (src.startsWith('/')) return `${backendBase}${src}`;
+    return `${backendBase}/${src}`;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -248,7 +278,7 @@ const Blog: React.FC = () => {
               {filteredPosts.map((post) => (
                 <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                   <img 
-                    src={post.image || 'https://trae-api-sg.mchost.guru/api/ide/v1/text_to_image?prompt=AI%20technology%20abstract%20digital%20background&image_size=landscape_4_3'} 
+                    src={getImageUrl(post.image)} 
                     alt={post.title}
                     className="w-full h-48 object-cover"
                   />
@@ -269,7 +299,7 @@ const Blog: React.FC = () => {
                     </p>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {Array.from(dict.tagsCloud.tags).slice(0, 3).map((tag, index) => (
+                      {(post.tags && post.tags.length > 0 ? post.tags.slice(0, 3) : Array.from(dict.tagsCloud.tags).slice(0, 3)).map((tag, index) => (
                         <span key={index} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                           #{tag}
                         </span>
@@ -306,14 +336,14 @@ const Blog: React.FC = () => {
           </div>
           
           <div className="flex flex-wrap justify-center gap-4">
-            {allTags.map((tag, index) => (
+            {popularTags.map((tag, index) => (
               <button
                 key={index}
-                onClick={() => setSearchTerm(tag)}
+                onClick={() => setSearchTerm(tag.name)}
                 className="px-6 py-3 bg-white text-gray-700 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors shadow-md hover:shadow-lg"
               >
                 <Tag className="w-4 h-4 inline mr-2" />
-                {tag}
+                {tag.name}{tag.count ? ` (${tag.count})` : ''}
               </button>
             ))}
           </div>
