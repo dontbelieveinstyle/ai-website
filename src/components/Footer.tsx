@@ -7,6 +7,7 @@ import logoImg from '../assets/logo.jpg';
 
 const Footer: React.FC = () => {
   const { t, language } = useI18n();
+  const showAddressInFooter = false;
   return (
     <footer className="bg-blue-900 text-white">
       <div className="container mx-auto px-4 py-12">
@@ -85,12 +86,14 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <MapPin size={16} className="text-orange-400" />
-                <span className="text-blue-200 text-sm">
-                  {translations[language].pages.contact.info.items[0].content}
-                </span>
-              </div>
+              {showAddressInFooter && (
+                <div className="flex items-center space-x-3">
+                  <MapPin size={16} className="text-orange-400" />
+                  <span className="text-blue-200 text-sm">
+                    {translations[language].pages.contact.info.items[0].content}
+                  </span>
+                </div>
+              )}
               <div className="flex items-center space-x-3">
                 <Mail size={16} className="text-orange-400" />
                 <span className="text-blue-200 text-sm">

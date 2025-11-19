@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
 
   const { t, toggleLanguage } = useI18n();
+  const showTopContactCTA = false;
   const navItems = [
     { name: t('nav.home'), path: '/' },
     { name: t('nav.about'), path: '/about' },
@@ -47,9 +48,11 @@ const Navbar: React.FC = () => {
                 {item.name}
               </Link>
             ))}
-            <Link to="/contact" className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium">
-              {t('cta.contactUs')}
-            </Link>
+            {showTopContactCTA && (
+              <Link to="/contact" className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium">
+                {t('cta.contactUs')}
+              </Link>
+            )}
             <button
               onClick={toggleLanguage}
               className="ml-2 px-3 py-2 rounded-lg border border-blue-200 text-blue-900 hover:bg-blue-50 text-sm"
@@ -89,9 +92,11 @@ const Navbar: React.FC = () => {
                 </Link>
               ))}
               <div className="px-3 py-2 space-y-2">
-                <Link to="/contact" className="block w-full text-center bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium">
-                  {t('cta.contactUs')}
-                </Link>
+                {showTopContactCTA && (
+                  <Link to="/contact" className="block w-full text-center bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium">
+                    {t('cta.contactUs')}
+                  </Link>
+                )}
                 <button
                   onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}
                   className="w-full px-3 py-2 rounded-lg border border-blue-200 text-blue-900 hover:bg-blue-50 text-sm"

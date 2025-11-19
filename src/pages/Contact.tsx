@@ -59,11 +59,14 @@ const Contact: React.FC = () => {
     }
   };
 
+  // Hide address in contact info (temporarily not needed)
   const contactInfo = [
-    { icon: MapPin, ...dict.info.items[0] },
     { icon: Mail, ...dict.info.items[1] },
     { icon: Clock, ...dict.info.items[2] },
   ];
+
+  // Control visibility of company location (map) section
+  const showMapSection = false;
 
   const serviceOptions = dict.form.serviceOptions;
 
@@ -259,25 +262,27 @@ const Contact: React.FC = () => {
         </div>
       </div>
       
-      {/* Map Section */}
-      <div className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{dict.map.title}</h2>
-            <p className="text-lg text-gray-600">{dict.map.description}</p>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="aspect-w-16 aspect-h-9 bg-gray-200 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 text-lg">{dict.map.loading}</p>
-                <p className="text-gray-500 text-sm mt-2">{dict.map.address}</p>
+      {/* Map Section (hidden) */}
+      {showMapSection && (
+        <div className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">{dict.map.title}</h2>
+              <p className="text-lg text-gray-600">{dict.map.description}</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <div className="aspect-w-16 aspect-h-9 bg-gray-200 flex items-center justify-center">
+                <div className="text-center">
+                  <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 text-lg">{dict.map.loading}</p>
+                  <p className="text-gray-500 text-sm mt-2">{dict.map.address}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       
       {/* CTA Section */}
       <div className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
