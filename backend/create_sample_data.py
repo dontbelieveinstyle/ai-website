@@ -5,7 +5,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'airabbi_backend.settings')
 django.setup()
 
-from blog.models import BlogPost
+from blog.models import BlogPost, Tag
 from django.utils.text import slugify
 
 # Sample blog posts
@@ -88,5 +88,30 @@ for post_data in sample_posts:
         print(f"Created blog post: {post_data['title']}")
     else:
         print(f"Blog post already exists: {post_data['title']}")
+
+# Create initial tags
+initial_tags = ['AI', 'Machine Learning', 'Deep Learning']
+for tag_name in initial_tags:
+    Tag.objects.get_or_create(name=tag_name)
+print(f"Ensured initial tags exist: {', '.join(initial_tags)}")
+
+# Optional: attach tags to posts based on titles
+title_tag_map = {
+    'AI Transformation: The Future of Business': ['AI'],
+    'Machine Learning in Healthcare: Saving Lives with Data': ['Machine Learning', 'AI'],
+    'The Rise of Conversational AI: Beyond Simple Chatbots': ['AI']
+}
+
+for post_data in sample_posts:
+    slug = slugify(post_data['title'])
+    try:
+        post = BlogPost.objects.get(slug=slug)
+        names = title_tag_map.get(post_data['title'], [])
+        if names:
+            tags = Tag.objects.filter(name__in=names)
+            post.tags.add(*tags)
+            print(f"Attached tags {names} to post: {post_data['title']}")
+    except BlogPost.DoesNotExist:
+        continue
 
 print("Sample data creation completed!")

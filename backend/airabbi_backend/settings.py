@@ -125,8 +125,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# 媒体文件（用户上传）配置
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -147,9 +150,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://18.162.134.82",
-    "https://18.162.134.82",
     "http://127.0.0.1:8000",
+    "https://ai.xrexp.io",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
